@@ -11,6 +11,7 @@ import {
 import measures from './measures.json';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { firestore } from '../firebase/firebaseClient'
+import Link from 'next/link';
 // TODO: Get emulator working, I could not figure out how to get it working
 // connectFirestoreEmulator(db, 'localhost', 8080)
 
@@ -57,6 +58,7 @@ const Home: NextPage = () => {
             ))}
           </span>
         )}
+        <Link href="/testimony_workflow">Testimony Workflow</Link>
       </p>
     </div>
   )
