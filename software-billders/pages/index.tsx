@@ -13,22 +13,12 @@ import {
 } from "@firebase/firestore";
 import measures from './measures.json';
 import { useCollection } from 'react-firebase-hooks/firestore';
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDrDUcny-LLnVHbJDzh_aWFCLgfuS56CDw",
-  authDomain: "software-billders.firebaseapp.com",
-  projectId: "software-billders",
-  storageBucket: "software-billders.appspot.com",
-  messagingSenderId: "605421709546",
-  appId: "1:605421709546:web:aa098beface8250c764f93"
-};
-
-const app = initializeApp(firebaseConfig);
-const db: Firestore = getFirestore(app);
-
+import firebaseApp from '../firebase/firebaseClient'
+import SignIn from '../components/login'
 // TODO: Get emulator working, I could not figure out how to get it working
 // connectFirestoreEmulator(db, 'localhost', 8080)
 
+const db: Firestore = getFirestore(firebaseApp);
 // If collection is empty, it will write 4000+ documents to the measures collection
 async function writeToMeasuresCollection() {
   const querySnapshot = await getDocs(query(collection(db, 'measures'), limit(1)));
@@ -47,7 +37,6 @@ async function writeToMeasuresCollection() {
 const Home: NextPage = () => {
   // If measures collection is empty, hydrate database with measures.json
   writeToMeasuresCollection();
-
   // This will query for 10 documents, increase this by changing the limit()
   const [value, loading, error] = useCollection(
     query(
