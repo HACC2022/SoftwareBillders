@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { doc, setDoc } from "@firebase/firestore";
 import { firestore } from "../firebase/firebaseClient";
+import {Button, Form} from "semantic-ui-react";
 
 const Testimony_Form = ({ testimonyDocument }) => {
 
@@ -21,24 +22,27 @@ const Testimony_Form = ({ testimonyDocument }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <span>Assign testimony to person (email currently but can be changed): </span>
-      <input
-        itemID={`assignedPerson-${testimonyDocument.id}`}
-        type="text"
-        onChange={event => setAssignedPerson(event.target.value)}
-        value={assignedPerson}
-      />
-      <br/>
-      <span>Testimony content (any text can be put here): </span>
-      <textarea
-        itemID={`testimony-content-${testimonyDocument.id}`}
-        value={testimonyContent}
-        onChange={event => setTestimonyContent(event.target.value)}
-      />
-      <br/>
-      <button type="submit" itemID={`submit-${testimonyDocument.id}`}>Submit form</button>
-    </form>
+    <div>
+      <Form onSubmit={handleSubmit}>
+        <Form.Field>
+          <label>Assign testimony to person (email currently but can be changed)</label>
+          <input
+            placeholder='Email'
+            itemID={`assignedPerson-${testimonyDocument.id}`}
+            onChange={event => setAssignedPerson(event.target.value)}
+            value={assignedPerson}
+          />
+        </Form.Field>
+        <Form.TextArea
+          label='Testimony content (any text can be put here)'
+          placeholder='Please enter testimony'
+          itemID={`testimony-content-${testimonyDocument.id}`}
+          value={testimonyContent}
+          onChange={event => setTestimonyContent(event.target.value)}
+        />
+        <Button type='submit' itemID={`submit-${testimonyDocument.id}`}>Submit</Button>
+      </Form>
+    </div>
   )
 }
 
