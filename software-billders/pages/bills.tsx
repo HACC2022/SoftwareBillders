@@ -6,7 +6,9 @@ import {
   getDocs,
   limit,
   query,
-  setDoc
+  setDoc,
+  startAfter,
+  orderBy
 } from "@firebase/firestore";
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { firestore } from '../firebase/firebaseClient'
@@ -16,10 +18,12 @@ import { Container, Table } from 'semantic-ui-react';
 
 const Bills: NextPage = () => {
   // This will query for 10 documents, increase this by changing the limit()
+  const billsPerPage = 10;
   const [value, loading, error] = useCollection(
     query(
       collection(firestore, 'measures'),
-      limit(10)
+      limit(billsPerPage),
+      orderBy('code'),
     ),
     {
       snapshotListenOptions: { includeMetadataChanges: true},
@@ -33,7 +37,7 @@ const Bills: NextPage = () => {
         {loading && <span>Collection: Loading...</span>}
         {value && (
             <div>
-                <h1 className={styles.title}>Bills</h1>
+                <h1 className={styles.header}>Bills</h1>
                 <Table>
                     <thead>
                         <tr>
