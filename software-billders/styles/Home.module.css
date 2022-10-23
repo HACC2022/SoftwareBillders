@@ -2,14 +2,6 @@
   padding: 0 2rem;
 }
 
-.header {
-  text-align: center;
-}
-
-.login {
-  text-align: right;
-}
-
 .main {
   min-height: 100vh;
   padding: 4rem 0;
