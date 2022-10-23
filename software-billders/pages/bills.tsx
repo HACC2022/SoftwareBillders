@@ -12,7 +12,7 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 import { firestore } from '../firebase/firebaseClient'
 import styles from '../styles/Home.module.css'
 import SignIn from './login'
-import { Container } from 'semantic-ui-react';
+import { Container, Table } from 'semantic-ui-react';
 
 const Bills: NextPage = () => {
   // This will query for 10 documents, increase this by changing the limit()
@@ -34,22 +34,30 @@ const Bills: NextPage = () => {
         {value && (
             <div>
                 <h1 className={styles.title}>Bills</h1>
-                <table>
-                    <tr>
-                        <th>Bills</th>
-                        <th>title</th>
-                        <th>Bills</th>
-                        <th>Bills{' '}</th>
-                        <th>Bills{' '}</th>
-                    </tr>
-                    {value.docs.map((doc) => (
-                    <tr key={doc.id}>
-                        <td>{doc.data().code}</td>
-                        <td>{doc.data().measureTitle}</td>
-                        <td>{new Date(doc.data().lastUpdated * 1000).toString()}</td>
-                    </tr>
-                    ))}
-                </table>
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Title/Resolution</th>
+                            <th>Description</th>
+                            <th>Committee</th>
+                            <th>Status</th>
+                            <th>Last Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {value.docs.map((doc) => (
+                        <tr key={doc.id}>
+                            <td><a href={(doc.data().measurePdfUrl)} target="_blank">{doc.data().code}</a></td>
+                            <td>{doc.data().reportTitle}</td>
+                            <td>{doc.data().measureTitle}</td>
+                            <td>{doc.data().currentReferral}</td>
+                            <td>{doc.data().status}</td>
+                            <td>{new Date(doc.data().lastUpdated * 1000).toDateString()}</td>
+                        </tr>
+                        ))}
+                    </tbody>
+                </Table>
             </div>
         )}
       </p>
