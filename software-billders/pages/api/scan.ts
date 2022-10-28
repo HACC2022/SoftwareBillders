@@ -10,5 +10,6 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  res.status(200).json({ name: 'John Doe' })
+  fetch("https://api.legiscan.com/?key=53acbad59cb0b801e3e3f4c1d3af58d3&&op=getSearch").then(r => r.json()).then(data => res.json(data));
+  //res.status(200).json({ name: 'John Doe' })
 }

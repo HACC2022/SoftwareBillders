@@ -20,6 +20,7 @@ async function writeToMeasuresCollection() {
   const querySnapshot = await getDocs(query(collection(firestore, 'measures'), limit(1)));
   if (querySnapshot.size === 0) {
     console.log('empty collection was found, generating data. This will take a while (10 mins).');
+    // @ts-ignore
     measures.forEach((measure: { code: String; }) => {
       const documentKey = doc(firestore, `measures/${measure.code}`);
       setDoc(documentKey, measure);
