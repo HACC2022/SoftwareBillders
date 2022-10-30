@@ -1,7 +1,3 @@
-#hearing-column {
-  padding: 0;
-}
-
 body {
   background: #C5D1EB;
 }
@@ -11,7 +7,15 @@ body {
   border-radius: 0;
 }
 
+#hearing-column {
+  padding: 0;
+}
 
 #tbl-container {
   margin: 0;
+}
+
+#filter-column {
+  padding-left: 0;
+  padding-right: 15rem;
 }
