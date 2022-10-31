@@ -13,6 +13,7 @@ import {
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { firestore } from '../firebase/firebaseClient'
 import styles from '../styles/Home.module.css'
+import AddToCalendar from "../components/AddToCalendar";
 import SignIn from './login'
 import { Container, Header, Icon, Menu, Table } from 'semantic-ui-react';
 import Link from 'next/link';
@@ -72,8 +73,8 @@ const Bills: NextPage = () => {
           </Menu.Item>
         </Menu.Menu>
       </Menu>
-      
-      <p>
+
+      <Container>
       {error && <strong>Error: {JSON.stringify(error)}</strong>}
       {loading && <span>Collection: Loading...</span>}
       {value && (
@@ -88,6 +89,7 @@ const Bills: NextPage = () => {
               <th>Committee</th>
               <th>Status</th>
               <th>Last Update</th>
+              <th>Calendar Integration</th>
             </tr>
             </thead>
             <tbody>
@@ -99,13 +101,15 @@ const Bills: NextPage = () => {
                 <td>{doc.data().currentReferral}</td>
                 <td>{doc.data().status}</td>
                 <td>{new Date(doc.data().lastUpdated * 1000).toDateString()}</td>
+
+                <td><AddToCalendar document={doc} /></td>
               </tr>
             ))}
             </tbody>
           </Table>
         </div>
       )}
-    </p>
+    </Container>
     </div>
   )
 }

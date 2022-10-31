@@ -20,6 +20,7 @@ import {firestore} from "../firebase/firebaseClient";
 import {useState, useEffect} from "react";
 import SignIn from "./login";
 import 'firebase/firestore';
+import styles from '../styles/Home.module.css'
 import { QuerySnapshot } from 'firebase/firestore';
 import Link from 'next/link';
 
@@ -114,15 +115,7 @@ const HearingsList: NextPage = () => {
         </Menu.Item>
 
         <Menu.Item>
-          <Header as='h2' > <Link href="/Hearings">Hearings</Link> </Header>
-        </Menu.Item>
-
-        <Menu.Item>
-          <Header as='h2' > <Link href="/hearingsList">Hearings List</Link> </Header>
-        </Menu.Item>
-
-        <Menu.Item>
-          <Header as='h2' > <Link href="/bills">Bills</Link> </Header>
+          <Header as='h2' > <Link href="/hearingsList">Hearings</Link> </Header>
         </Menu.Item>
 
         <Menu.Item>
@@ -143,7 +136,7 @@ const HearingsList: NextPage = () => {
       <Grid container>
         <Grid.Row>
           <Grid.Column id='hearing-column'>
-            <Header as='h2' block>Hearings</Header>
+            <Header as='h2' block className={styles.mainHeader}>Hearings</Header>
           </Grid.Column>
         </Grid.Row>
 

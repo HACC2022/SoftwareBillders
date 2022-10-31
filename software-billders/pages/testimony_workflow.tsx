@@ -7,6 +7,7 @@ import { getAuth } from "@firebase/auth";
 import Testimony_Form from "../components/Testimony_Form";
 import Link from "next/link";
 import {Header, Icon, Menu } from 'semantic-ui-react';
+import styles from '../styles/Home.module.css'
 import SignIn from './login';
 
 const auth = getAuth(app);
@@ -41,15 +42,7 @@ const TestimonyWorkflow: NextPage = () => {
         </Menu.Item>
 
         <Menu.Item>
-          <Header as='h2' > <Link href="/Hearings">Hearings</Link> </Header>
-        </Menu.Item>
-
-        <Menu.Item>
-          <Header as='h2' > <Link href="/hearingsList">Hearings List</Link> </Header>
-        </Menu.Item>
-
-        <Menu.Item>
-          <Header as='h2' > <Link href="/bills">Bills</Link> </Header>
+          <Header as='h2' > <Link href="/hearingsList">Hearings</Link> </Header>
         </Menu.Item>
 
         <Menu.Item>
@@ -67,7 +60,7 @@ const TestimonyWorkflow: NextPage = () => {
         </Menu.Menu>
       </Menu>
 
-      <h1>Write and Manage Testimony Page </h1>
+      <h1 className={styles.testimonyHeader}>Write and Manage Testimony Page </h1>
       {user ? <span>Logged in user: {user.email}</span> : <span>You are not signed in, please <Link href="/login">sign in</Link>.</span>}
       <p>
         {error && <strong>Error: {JSON.stringify(error)}</strong>}

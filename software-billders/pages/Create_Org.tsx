@@ -60,15 +60,7 @@ const Create_Org: NextPage = () => {
         </Menu.Item>
 
         <Menu.Item>
-          <Header as='h2' > <Link href="/Hearings">Hearings</Link> </Header>
-        </Menu.Item>
-
-        <Menu.Item>
-          <Header as='h2' > <Link href="/hearingsList">Hearings List</Link> </Header>
-        </Menu.Item>
-
-        <Menu.Item>
-          <Header as='h2' > <Link href="/bills">Bills</Link> </Header>
+          <Header as='h2' > <Link href="/hearingsList">Hearings</Link> </Header>
         </Menu.Item>
 
         <Menu.Item>

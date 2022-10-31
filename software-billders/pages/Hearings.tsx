@@ -69,10 +69,6 @@ const Hearings: NextPage = () => {
         </Menu.Item>
 
         <Menu.Item>
-          <Header as='h2' > <Link href="/bills">Bills</Link> </Header>
-        </Menu.Item>
-
-        <Menu.Item>
           <Header as='h2' > <Link href="/Create_Org">Create Organization</Link> </Header>
         </Menu.Item>
 

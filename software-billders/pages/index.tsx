@@ -12,7 +12,9 @@ import measures from './measures.json';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { firestore } from '../firebase/firebaseClient'
 import Link from 'next/link';
-import { Header, Icon, Menu } from 'semantic-ui-react';
+import styles from '../styles/Home.module.css'
+import AddToCalendar from "../components/AddToCalendar";
+import {Container, Header, Icon, Menu, Table } from 'semantic-ui-react';
 import SignIn from './login';
 // TODO: Get emulator working, I could not figure out how to get it working
 // connectFirestoreEmulator(db, 'localhost', 8080)
@@ -57,21 +59,13 @@ const Home: NextPage = () => {
         <Menu.Item>
           <Header as='h2' inverted><Link href="/">Home</Link></Header>
         </Menu.Item>
-        
+
         <Menu.Item>
           <Header as='h2' > <Link href="/testimony_workflow">Testimony Workflow</Link> </Header>
         </Menu.Item>
 
         <Menu.Item>
-          <Header as='h2' > <Link href="/Hearings">Hearings</Link> </Header>
-        </Menu.Item>
-
-        <Menu.Item>
-          <Header as='h2' > <Link href="/hearingsList">Hearings List</Link> </Header>
-        </Menu.Item>
-
-        <Menu.Item>
-          <Header as='h2' > <Link href="/bills">Bills</Link> </Header>
+          <Header as='h2' > <Link href="/hearingsList">Hearings</Link> </Header>
         </Menu.Item>
 
         <Menu.Item>
@@ -89,20 +83,41 @@ const Home: NextPage = () => {
         </Menu.Menu>
       </Menu>
 
-      <p>
+      <Container>
         {error && <strong>Error: {JSON.stringify(error)}</strong>}
         {loading && <span>Collection: Loading...</span>}
         {value && (
-          <span>
-            Collection:{' '}
-            {value.docs.map((doc) => (
-              <div key={doc.id}>
-                {JSON.stringify(doc.data())},{' '}
-              </div>
-            ))}
-          </span>
+          <div>
+            <h1 className={styles.mainHeader}>Bills</h1>
+            <Table>
+              <thead>
+              <tr>
+                <th>Code</th>
+                <th>Title/Resolution</th>
+                <th>Description</th>
+                <th>Committee</th>
+                <th>Status</th>
+                <th>Last Update</th>
+                <th>Calendar Integration</th>
+              </tr>
+              </thead>
+              <tbody>
+              {value.docs.map((doc) => (
+                <tr key={doc.id}>
+                  <td><a href={(doc.data().measurePdfUrl)} target="_blank">{doc.data().code}</a></td>
+                  <td>{doc.data().reportTitle}</td>
+                  <td>{doc.data().measureTitle}</td>
+                  <td>{doc.data().currentReferral}</td>
+                  <td>{doc.data().status}</td>
+                  <td>{new Date(doc.data().lastUpdated * 1000).toDateString()}</td>
+                  <td><AddToCalendar document={doc} /></td>
+                </tr>
+              ))}
+              </tbody>
+            </Table>
+          </div>
         )}
-      </p>
+      </Container>
     </div>
   )
 }
