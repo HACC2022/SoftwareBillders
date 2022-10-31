@@ -1,0 +1,21 @@
+body {
+  background: #C5D1EB;
+}
+
+#hearing-menu {
+  background: #92AFD7;
+  border-radius: 0;
+}
+
+#hearing-column {
+  padding: 0;
+}
+
+#tbl-container {
+  margin: 0;
+}
+
+#filter-column {
+  padding-left: 0;
+  padding-right: 15rem;
+}
