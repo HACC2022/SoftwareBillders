@@ -7,8 +7,11 @@ const AddToCalendar = ( {document} ) => {
 
   // TODO: Not have a repeat in here AND eventCalendar. Create
   const parseDateTime = function(dateTime:string) {
-    dateTime = dateTime.substring(0, dateTime.lastIndexOf(',')) + dateTime.substring(dateTime.lastIndexOf(',') + 1);
-    return moment(dateTime, "LLLL")
+    if (dateTime !== undefined) {
+      dateTime = dateTime.substring(0, dateTime.lastIndexOf(',')) + dateTime.substring(dateTime.lastIndexOf(',') + 1);
+      return moment(dateTime, "LLLL")
+    }
+    return moment()
   }
   const measureHearing: string = `${document.data().measureType}-${document.data().measureNumber}`;
   const dateTimeFormat = parseDateTime(document.data().datetime);
