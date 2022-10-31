@@ -21,6 +21,7 @@ import {useState, useEffect} from "react";
 import SignIn from "./login";
 import 'firebase/firestore';
 import { QuerySnapshot } from 'firebase/firestore';
+import Link from 'next/link';
 
 // If collection is empty, it will write 4000+ documents to the hearings collection
 async function writeToHearingsCollection() {
@@ -100,8 +101,38 @@ const HearingsList: NextPage = () => {
       }
       <Menu inverted borderless fluid id='hearing-menu'>
         <Menu.Item>
-          <Header as='h1' inverted><Icon name='folder open outline'/>DOE Bill Tracker</Header>
+          <Header as='h1' inverted><Icon name='folder open outline'/> DOE Bill Tracker</Header>
         </Menu.Item>
+
+        <Menu.Item></Menu.Item><Menu.Item></Menu.Item>
+        <Menu.Item>
+          <Header as='h2' inverted><Link href="/">Home</Link></Header>
+        </Menu.Item>
+
+        <Menu.Item>
+          <Header as='h2' > <Link href="/testimony_workflow">Testimony Workflow</Link> </Header>
+        </Menu.Item>
+
+        <Menu.Item>
+          <Header as='h2' > <Link href="/Hearings">Hearings</Link> </Header>
+        </Menu.Item>
+
+        <Menu.Item>
+          <Header as='h2' > <Link href="/hearingsList">Hearings List</Link> </Header>
+        </Menu.Item>
+
+        <Menu.Item>
+          <Header as='h2' > <Link href="/bills">Bills</Link> </Header>
+        </Menu.Item>
+
+        <Menu.Item>
+          <Header as='h2' > <Link href="/Create_Org">Create Organization</Link> </Header>
+        </Menu.Item>
+
+        <Menu.Item>
+          <Header as='h2' > <Link href="/Manage_Org">Manage Organization</Link> </Header>
+        </Menu.Item>
+
         <Menu.Menu position='right'>
           <Menu.Item>
             {SignIn()}
