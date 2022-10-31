@@ -34,8 +34,8 @@ const Hearings: NextPage = () => {
   // This will query for 10 documents, increase this by changing the limit()
   const [value, loading, error] = useCollection(
     query(
-      collection(firestore, 'measures'),
-      limit(10)
+      collection(firestore, 'hearings'),
+      limit(30)
     ),
     {
       snapshotListenOptions: { includeMetadataChanges: true},
@@ -51,10 +51,9 @@ const Hearings: NextPage = () => {
             Collection:{' '}
             {value.docs.map((doc) => (
               <div key={doc.id}>
-                <span>{JSON.stringify(doc.data())},{' '}</span>
+                {/*<span>{JSON.stringify(doc.data())},{' '}</span>*/}
+                {`${doc.data().measureType}-${doc.data().measureNumber}`}
                 <AddToCalendar document={doc} />
-                <br/>
-                <br/>
               </div>
             ))}
           </span>
