@@ -48,6 +48,15 @@ const Home: NextPage = () => {
       snapshotListenOptions: { includeMetadataChanges: true},
     });
 
+    const [valueHearings, loadingHearings, errorHearings] = useCollection(
+      query(
+        collection(firestore, 'hearings'),
+        limit(30)
+      ),
+      {
+        snapshotListenOptions: { includeMetadataChanges: true},
+      });
+
   return (
     <div>
       <Menu inverted borderless fluid id='hearing-menu'>
@@ -84,9 +93,9 @@ const Home: NextPage = () => {
       </Menu>
 
       <Container>
-        {error && <strong>Error: {JSON.stringify(error)}</strong>}
-        {loading && <span>Collection: Loading...</span>}
-        {value && (
+        {error && errorHearings && <strong>Error: {JSON.stringify(error)}</strong>}
+        {loading && loadingHearings && <span>Collection: Loading...</span>}
+        {value && valueHearings && (
           <div>
             <h1 className={styles.mainHeader}>Bills</h1>
             <Table>

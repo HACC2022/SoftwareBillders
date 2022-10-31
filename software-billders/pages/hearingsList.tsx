@@ -15,7 +15,7 @@ import {
 } from "@firebase/firestore";
 import hearings from './hearings.json';
 import {useCollection, useDocumentOnce} from 'react-firebase-hooks/firestore';
-import {Container, Segment, Header, Table, Menu, Label, Icon, Pagination, Grid, Loader, Dimmer, Search, Select} from 'semantic-ui-react';
+import {Container, Segment, Header, Table, Menu, Label, Icon, Pagination, Grid, Loader, Dimmer, Search, Select, Button} from 'semantic-ui-react';
 import {firestore} from "../firebase/firebaseClient";
 import {useState, useEffect} from "react";
 import SignIn from "./login";
@@ -143,6 +143,9 @@ const HearingsList: NextPage = () => {
         <Grid.Row>
         <Grid.Column floated='left' id='filter-column'>
             <Select placeholder='Select your country' options={filterOptions}/>
+          </Grid.Column>
+          <Grid.Column floated='left'>
+            <Button href="/Hearings">Calendar</Button>
           </Grid.Column>
           <Grid.Column id='filter-column'>
             <Search
