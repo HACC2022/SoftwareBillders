@@ -12,6 +12,16 @@
   align-items: center;
 }
 
+.mainHeader {
+  background-color: white;
+  text-align: center;
+}
+
+.testimonyHeader {
+  text-align: center;
+
+}
+
 .footer {
   display: flex;
   flex: 1;

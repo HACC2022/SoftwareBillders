@@ -6,39 +6,26 @@ import {
   getDocs,
   limit,
   query,
-  setDoc
+  setDoc,
+  startAfter,
+  orderBy
 } from "@firebase/firestore";
-import hearings from './hearings.json';
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { firestore } from '../firebase/firebaseClient';
+import { firestore } from '../firebase/firebaseClient'
+import styles from '../styles/Home.module.css'
 import AddToCalendar from "../components/AddToCalendar";
-import {Header, Icon, Menu } from 'semantic-ui-react';
-import SignIn from './login';
+import SignIn from './login'
+import { Container, Header, Icon, Menu, Table } from 'semantic-ui-react';
 import Link from 'next/link';
 
-// If collection is empty, it will write documents to the hearings collection
-async function writeToHearings() {
-  const querySnapshot = await getDocs(query(collection(firestore, 'hearings'), limit(1)));
-  if (querySnapshot.size === 0) {
-    console.log('empty collection was found, generating data. This will take a while (10 mins).');
-    hearings.forEach((hearing: { measureNumber: Number, measureType: string }) => {
-      const documentKey = doc(firestore, `hearings/${hearing.measureType}-${hearing.measureNumber}`);
-      setDoc(documentKey, hearing);
-    });
-  }
-  else {
-    console.log('non-empty collection');
-  }
-}
-
-const Hearings: NextPage = () => {
-  // If hearings collection is empty, hydrate database with hearings.json
-  writeToHearings();
+const Bills: NextPage = () => {
   // This will query for 10 documents, increase this by changing the limit()
+  const billsPerPage = 10;
   const [value, loading, error] = useCollection(
     query(
-      collection(firestore, 'hearings'),
-      limit(30)
+      collection(firestore, 'measures'),
+      limit(billsPerPage),
+      orderBy('code'),
     ),
     {
       snapshotListenOptions: { includeMetadataChanges: true},
@@ -69,6 +56,10 @@ const Hearings: NextPage = () => {
         </Menu.Item>
 
         <Menu.Item>
+          <Header as='h2' > <Link href="/bills">Bills</Link> </Header>
+        </Menu.Item>
+
+        <Menu.Item>
           <Header as='h2' > <Link href="/Create_Org">Create Organization</Link> </Header>
         </Menu.Item>
 
@@ -83,24 +74,44 @@ const Hearings: NextPage = () => {
         </Menu.Menu>
       </Menu>
 
-      <p>
-        {error && <strong>Error: {JSON.stringify(error)}</strong>}
-        {loading && <span>Collection: Loading...</span>}
-        {value && (
-          <span>
-            Collection:{' '}
+      <Container>
+      {error && <strong>Error: {JSON.stringify(error)}</strong>}
+      {loading && <span>Collection: Loading...</span>}
+      {value && (
+        <div>
+          <h1 className={styles.header}>Bills</h1>
+          <Table>
+            <thead>
+            <tr>
+              <th>Code</th>
+              <th>Title/Resolution</th>
+              <th>Description</th>
+              <th>Committee</th>
+              <th>Status</th>
+              <th>Last Update</th>
+              <th>Calendar Integration</th>
+            </tr>
+            </thead>
+            <tbody>
             {value.docs.map((doc) => (
-              <div key={doc.id}>
-                {/*<span>{JSON.stringify(doc.data())},{' '}</span>*/}
-                {`${doc.data().measureType}-${doc.data().measureNumber}`}
-                <AddToCalendar document={doc} />
-              </div>
+              <tr key={doc.id}>
+                <td><a href={(doc.data().measurePdfUrl)} target="_blank">{doc.data().code}</a></td>
+                <td>{doc.data().reportTitle}</td>
+                <td>{doc.data().measureTitle}</td>
+                <td>{doc.data().currentReferral}</td>
+                <td>{doc.data().status}</td>
+                <td>{new Date(doc.data().lastUpdated * 1000).toDateString()}</td>
+
+                <td><AddToCalendar document={doc} /></td>
+              </tr>
             ))}
-          </span>
-        )}
-      </p>
+            </tbody>
+          </Table>
+        </div>
+      )}
+    </Container>
     </div>
   )
 }
 
-export default Hearings
+export default Bills
