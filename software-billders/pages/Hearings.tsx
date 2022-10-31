@@ -12,7 +12,8 @@ import hearings from './hearings.json';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { firestore } from '../firebase/firebaseClient';
 import AddToCalendar from "../components/AddToCalendar";
-import {Header, Icon, Menu } from 'semantic-ui-react';
+import EventCalendar from "../components/EventCalendar";
+import {Header, Icon, Menu, Grid } from 'semantic-ui-react';
 import SignIn from './login';
 import Link from 'next/link';
 
@@ -87,16 +88,11 @@ const Hearings: NextPage = () => {
         {error && <strong>Error: {JSON.stringify(error)}</strong>}
         {loading && <span>Collection: Loading...</span>}
         {value && (
-          <span>
-            Collection:{' '}
-            {value.docs.map((doc) => (
-              <div key={doc.id}>
-                {/*<span>{JSON.stringify(doc.data())},{' '}</span>*/}
-                {`${doc.data().measureType}-${doc.data().measureNumber}`}
-                <AddToCalendar document={doc} />
-              </div>
-            ))}
-          </span>
+          <Grid container>
+            <Grid.Column>
+               <EventCalendar events={value.docs}/>
+            </Grid.Column>
+          </Grid>
         )}
       </p>
     </div>
